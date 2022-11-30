@@ -1,4 +1,4 @@
-const BASE_URL = `https://restcountries.com/v3.1/name`;
+const BASE_URL = `https://restcountries.com/v3.1/name/`;
 
 export function fetchCountries(name) {
   return fetch(
@@ -10,6 +10,6 @@ export function fetchCountries(name) {
       }
       return resp.json();
     })
-    .then(data)
-    .catch(err);
+
+    .catch(err => console.log(err));
 }
