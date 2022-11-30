@@ -18,11 +18,13 @@ function onNameInput(event) {
     refs.listEl.innerHTML = '';
     refs.countryInfoEl.innerHTML = '';
     if (countries.length === 1) {
-      refs.countryInfoEl.innerHTML = creatMarkup(countries);
+      refs.countryInfoEl.innerHTML = creatMarkupInfo(countries);
+    } else if (countries.length < 10) {
+      refs.countryInfoEl.innerHTML = creatMarkupList(countries);
     }
   });
 }
-function creatMarkup(countries) {
+function creatMarkupInfo(countries) {
   const markupCountryInfo = countries
     .map(({ name, flags, capital, population, languages }) => {
       return `<li>
@@ -47,4 +49,15 @@ function creatMarkup(countries) {
     })
     .join('');
   return markupCountryInfo;
+}
+function creatMarkupList(countries) {
+  const markupCountryList = countries
+    .map(({ name, flags }) => {
+      return `<li>
+        <img src= "${flags.svg}" alt ="Flag of ${name.official}" width =40px higth = 60px />
+        <p>${name.official}</p>
+      </li>`;
+    })
+    .join('');
+  return markupCountryList;
 }
