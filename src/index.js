@@ -8,21 +8,29 @@ const refs = {
   listEl: document.querySelector('.country-list'),
   countryInfoEl: document.querySelector('.country-info'),
 };
-console.log(refs);
+
 refs.inputEl.addEventListener('input', debounce(onNameInput, DEBOUNCE_DELAY));
 
 function onNameInput(event) {
+  event.preventDefault();
   const name = refs.inputEl.value.trim();
+  if (name === '') {
+    return (refs.listEl.innerHTML = ''), (refs.countryInfoEl.innerHTML = '');
+  }
   console.log(name);
-  fetchCountries(name).then(countries => {
-    refs.listEl.innerHTML = '';
-    refs.countryInfoEl.innerHTML = '';
-    if (countries.length === 1) {
-      refs.countryInfoEl.innerHTML = creatMarkupInfo(countries);
-    } else if (countries.length < 10) {
-      refs.countryInfoEl.innerHTML = creatMarkupList(countries);
-    }
-  });
+  fetchCountries(name)
+    .then(countries => {
+      refs.listEl.innerHTML = '';
+      refs.countryInfoEl.innerHTML = '';
+      if (countries.length === 1) {
+        refs.countryInfoEl.innerHTML = creatMarkupInfo(countries);
+      } else if (countries.length < 10) {
+        refs.countryInfoEl.innerHTML = creatMarkupList(countries);
+      } else {
+        alertTooManyMatches();
+      }
+    })
+    .catch(alertWrongName);
 }
 function creatMarkupInfo(countries) {
   const markupCountryInfo = countries
@@ -60,4 +68,11 @@ function creatMarkupList(countries) {
     })
     .join('');
   return markupCountryList;
+}
+function alertWrongName() {
+  Notify.failure('Oops, there is no country with that name');
+}
+
+function alertTooManyMatches() {
+  Notify.info('Too many matches found. Please enter a more specific name.');
 }

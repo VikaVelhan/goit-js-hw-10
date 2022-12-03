@@ -6,7 +6,7 @@ export function fetchCountries(name) {
   )
     .then(resp => {
       if (!resp.ok) {
-        throw new Error(resp.statusText);
+        throw new Error(resp.status);
       }
       return resp.json();
     })
