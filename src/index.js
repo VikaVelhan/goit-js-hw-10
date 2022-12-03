@@ -25,7 +25,7 @@ function onNameInput(event) {
       if (countries.length === 1) {
         refs.countryInfoEl.innerHTML = creatMarkupInfo(countries);
       } else if (countries.length < 10) {
-        refs.countryInfoEl.innerHTML = creatMarkupList(countries);
+        refs.listEl.innerHTML = creatMarkupList(countries);
       } else {
         alertTooManyMatches();
       }
@@ -38,19 +38,19 @@ function creatMarkupInfo(countries) {
       return `<li>
         <img src= "${flags.svg}" alt ="Flag of ${
         name.official
-      }" width =40px higth = 60px />
-        <p>${name.official}</p>
+      }" width =30px height =30px />
+        <p><b>${name.official}</b></p>
       </li>
       <li>
-        <p>Capital:${capital}
+        <p><b>Capital:</b>${capital}
 </p>
       </li>
    <li>
-        <p>Population:${population}
+        <p><b>Population:</b>${population}
 </p>
       </li>
       <li>
-        <p>Languages:${Object.values(languages).join(', ')}
+        <p><b>Languages:</b>${Object.values(languages).join(', ')}
 </p>
       </li>
      `;
@@ -62,7 +62,7 @@ function creatMarkupList(countries) {
   const markupCountryList = countries
     .map(({ name, flags }) => {
       return `<li>
-        <img src= "${flags.svg}" alt ="Flag of ${name.official}" width =40px higth = 60px />
+        <img src= "${flags.svg}" alt ="Flag of ${name.official}" width =30px height = 30px />
         <p>${name.official}</p>
       </li>`;
     })
